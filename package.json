@@ -10,5 +10,8 @@
   "scripts": {
     "start": "node index.mjs",
     "test": "mocha tests/**/*.test.mjs"
+  },
+  "dependencies": {
+    "your_project_name": "file:"
   }
 }
