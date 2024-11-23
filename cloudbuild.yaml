@@ -1,11 +1,11 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$SHORT_SHA', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:latest', '.']
     
   # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$SHORT_SHA']
+    args: ['push', 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:latest']
     
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -15,7 +15,7 @@ steps:
     - 'deploy'
     - 'quiz-app-backend'
     - '--image'
-    - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$SHORT_SHA'
+    - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:latest'
     - '--region'
     - 'us-central1'
     - '--platform'
@@ -23,4 +23,4 @@ steps:
     - '--allow-unauthenticated'
 
 images:
-- 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$SHORT_SHA'
+- 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:latest'
