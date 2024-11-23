@@ -1,11 +1,11 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/quiz-app-backend', '.']
+    args: ['build', '-t', '${_AR_HOSTNAME}/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend', '.']
     
-  # Push the container image to Container Registry
+  # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/quiz-app-backend']
+    args: ['push', '${_AR_HOSTNAME}/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend']
     
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -13,14 +13,14 @@ steps:
     args:
     - 'run'
     - 'deploy'
-    - 'quiz-app-backend'
+    - '${_SERVICE_NAME}'
     - '--image'
-    - 'gcr.io/$PROJECT_ID/quiz-app-backend'
+    - '${_AR_HOSTNAME}/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend'
     - '--region'
-    - 'us-central1'
+    - '${_DEPLOY_REGION}'
     - '--platform'
-    - 'managed'
+    - '${_PLATFORM}'
     - '--allow-unauthenticated'
 
 images:
-- 'gcr.io/$PROJECT_ID/quiz-app-backend'
+- '${_AR_HOSTNAME}/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend'
