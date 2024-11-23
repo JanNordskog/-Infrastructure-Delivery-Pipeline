@@ -1,5 +1,5 @@
 steps:
-  # Debugging Step: Output substitution variables
+  # Debugging Step: Output substitution variables (optional, useful for verification)
   - name: 'ubuntu'
     entrypoint: 'bash'
     args:
@@ -11,15 +11,15 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:test-build'
+      - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/infrastructure-delivery-pipeline/quiz-app-backend:test-build'
       - '.'
-    
+
   # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:test-build'
-    
+      - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/infrastructure-delivery-pipeline/quiz-app-backend:test-build'
+
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
@@ -28,7 +28,7 @@ steps:
       - 'deploy'
       - 'quiz-app-backend'
       - '--image'
-      - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:test-build'
+      - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/infrastructure-delivery-pipeline/quiz-app-backend:test-build'
       - '--region'
       - 'us-central1'
       - '--platform'
@@ -37,4 +37,7 @@ steps:
 
 substitutions:
   _AR_HOSTNAME: us-central1-docker.pkg.dev
-  _REPOSITORY: cloud-run-source-deploy
+  _REPOSITORY: cloud-run-source-deploy/infrastructure-delivery-pipeline
+
+images:
+  - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/infrastructure-delivery-pipeline/quiz-app-backend:$SHORT_SHA'
