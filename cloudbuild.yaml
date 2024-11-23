@@ -11,7 +11,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - '$_AR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/quiz-app-backend:test-build'
+      - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:test-build'
     
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -21,7 +21,7 @@ steps:
       - 'deploy'
       - 'quiz-app-backend'
       - '--image'
-      - '$_AR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/quiz-app-backend:test-build'
+      - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:test-build'
       - '--region'
       - 'us-central1'
       - '--platform'
@@ -33,4 +33,4 @@ substitutions:
   _REPOSITORY: cloud-run-source-deploy
 
 images:
-  - '$_AR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/quiz-app-backend:$SHORT_SHA'
+  - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:test-build'
