@@ -1,4 +1,11 @@
 steps:
+  # Debug Step: Output the substituted image tag and repository to ensure correctness
+  - name: 'ubuntu'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'echo Image tag: $_AR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/quiz-app-backend:$SHORT_SHA'
+
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
     args:
