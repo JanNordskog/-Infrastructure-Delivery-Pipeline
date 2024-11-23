@@ -1,11 +1,11 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '${_AR_HOSTNAME}/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$COMMIT_SHA', '.']
     
   # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${_AR_HOSTNAME}/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend']
+    args: ['push', 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$COMMIT_SHA']
     
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -13,14 +13,14 @@ steps:
     args:
     - 'run'
     - 'deploy'
-    - '${_SERVICE_NAME}'
+    - 'quiz-app-backend'
     - '--image'
-    - '${_AR_HOSTNAME}/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend'
+    - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$COMMIT_SHA'
     - '--region'
-    - '${_DEPLOY_REGION}'
+    - 'us-central1'
     - '--platform'
-    - '${_PLATFORM}'
+    - 'managed'
     - '--allow-unauthenticated'
 
 images:
-- '${_AR_HOSTNAME}/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend'
+- 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$COMMIT_SHA'
