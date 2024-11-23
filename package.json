@@ -2,21 +2,16 @@
   "name": "your_project_name",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
-  "main": "src/index.mjs",
+  "devDependencies": {
+    "chai": "^4.5.0",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.8.2"
+  },
   "scripts": {
     "start": "node src/index.mjs",
     "test": "mocha tests/**/*.test.mjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1"
-  },
-  "devDependencies": {
-    "chai": "^5.1.2",
-    "chai-http": "^5.1.1",
-    "mocha": "^10.8.2"
+    "your_project_name": "file:"
   }
 }
