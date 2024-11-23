@@ -1,10 +1,23 @@
-// src/index.mjs
 import express from "express";
 
 const app = express();
 app.use(express.json());
 
-// Define routes
+// Basic security headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  next();
+});
+
+// Request logging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
+  next();
+});
+
+// Routes
 app.get("/", (req, res) => {
   res.json({ message: "Docker is easy 🐳" });
 });
@@ -31,9 +44,23 @@ app.get("/echo", (req, res) => {
   res.json({ echo: message });
 });
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    error: 'Something went wrong!',
+    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
+
 const port = process.env.PORT || 8080;
 const server = app.listen(port, () =>
   console.log(`app listening on http://localhost:${port}`)
 );
 
-export { app, server }; // Export both app and server
+export { app, server };

@@ -1,14 +1,22 @@
-# Simple Express API
+# Express API with Docker
 
-A lightweight Express.js API that demonstrates basic REST endpoints with Docker support.
+A simple Express.js API with Docker containerization and CI/CD pipeline.
+
+## Features
+
+- Express.js REST API
+- Docker containerization
+- GitHub Actions CI/CD
+- Automated testing
+- MySQL database support
 
 ## Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
-- Docker (optional, for containerization)
+- Node.js (v18 or higher)
+- Docker and Docker Compose
+- Git
 
-## Installation
+## Getting Started
 
 1. Clone the repository:
 ```bash
@@ -21,158 +29,49 @@ cd <project-directory>
 npm install
 ```
 
-## Project Structure
-
-```
-project-root/
-├── src/
-│   └── index.js    # Main application file
-├── package.json
-├── Dockerfile
-└── README.md
-```
-
-## Environment Variables
-
-The application uses the following environment variables:
-
-- `PORT`: Server port (default: 8080)
-
-## Running the Application
-
-### Local Development
-
-1. Start the server:
+3. Start the development server:
 ```bash
 npm start
 ```
 
-2. The API will be available at `http://localhost:8080`
-
-### Using Docker
-
-1. Build the Docker image:
+4. Run with Docker:
 ```bash
-docker build -t express-api .
-```
-
-2. Run the container:
-```bash
-docker run -p 8080:8080 express-api
+docker-compose up
 ```
 
 ## API Endpoints
 
-### GET /
-Returns a welcome message.
+- `GET /`: Welcome message
+- `GET /user/:id`: Get user by ID
+- `POST /user`: Create new user
+- `GET /echo`: Echo message
 
+## Testing
+
+Run the test suite:
 ```bash
-curl http://localhost:8080/
+npm test
 ```
 
-Response:
-```json
-{
-  "message": "Docker is easy 🐳"
-}
-```
+## Deployment
 
-### GET /user/:id
-Returns user information for the specified ID.
+The application can be deployed using Docker. The CI/CD pipeline automatically builds and tests the application on every push to main.
 
-```bash
-curl http://localhost:8080/user/123
-```
+### Environment Variables
 
-Response:
-```json
-{
-  "id": "123",
-  "name": "User 123",
-  "email": "user123@example.com"
-}
-```
-
-### POST /user
-Creates a new user. Requires name and email in the request body.
-
-```bash
-curl -X POST http://localhost:8080/user \
-  -H "Content-Type: application/json" \
-  -d '{"name": "John Doe", "email": "john@example.com"}'
-```
-
-Response:
-```json
-{
-  "id": 1700845632899,
-  "name": "John Doe",
-  "email": "john@example.com"
-}
-```
-
-### GET /echo
-Echoes back the message provided in the query parameter.
-
-```bash
-curl http://localhost:8080/echo?message=hello
-```
-
-Response:
-```json
-{
-  "echo": "hello"
-}
-```
-
-## Docker Configuration
-
-Create a `Dockerfile` in your project root:
-
-```dockerfile
-FROM node:18-alpine
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-
-EXPOSE 8080
-
-CMD ["node", "src/index.js"]
-```
-
-## Development
-
-To start the application in development mode with hot-reloading:
-
-1. Install nodemon:
-```bash
-npm install --save-dev nodemon
-```
-
-2. Add this script to your package.json:
-```json
-{
-  "scripts": {
-    "dev": "nodemon src/index.js"
-  }
-}
-```
-
-3. Run the development server:
-```bash
-npm run dev
-```
+- `PORT`: Application port (default: 8080)
+- `NODE_ENV`: Environment (development/production)
+- `MYSQL_ROOT_PASSWORD`: Database root password
+- `MYSQL_DATABASE`: Database name
+- `MYSQL_USER`: Database user
+- `MYSQL_PASSWORD`: Database password
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 ## License
