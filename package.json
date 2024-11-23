@@ -2,41 +2,17 @@
   "name": "express-docker-api",
   "version": "1.0.0",
   "type": "module",
-  "description": "Express.js API with Docker containerization",
   "main": "src/index.mjs",
   "scripts": {
     "start": "node src/index.mjs",
-    "dev": "nodemon src/index.mjs",
-    "test": "mocha tests/**/*.test.mjs",
-    "test:coverage": "c8 mocha tests/**/*.test.mjs",
-    "lint": "eslint . --ext .mjs",
-    "format": "prettier --write '**/*.{mjs,json,md,yml}'",
-    "docker:build": "docker build -t express-docker-api .",
-    "docker:run": "docker run -p 8080:8080 express-docker-api",
-    "compose:up": "docker-compose up",
-    "compose:down": "docker-compose down"
+    "test": "mocha tests/**/*.test.mjs"
   },
-  "keywords": [
-    "express",
-    "docker",
-    "api",
-    "nodejs"
-  ],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "express": "^4.21.1"
   },
   "devDependencies": {
     "chai": "^5.1.2",
     "chai-http": "^5.1.1",
-    "mocha": "^10.8.2",
-    "c8": "^8.0.0",
-    "nodemon": "^3.0.0",
-    "eslint": "^8.0.0",
-    "prettier": "^3.0.0"
-  },
-  "engines": {
-    "node": ">=18"
+    "mocha": "^10.8.2"
   }
 }
