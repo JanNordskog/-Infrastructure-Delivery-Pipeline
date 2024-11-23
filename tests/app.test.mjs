@@ -1,10 +1,10 @@
-// tests/app.test.mjs
-import chai from "chai";
-import chaiHttp from "chai-http";
+import pkg from 'chai';
+const { expect } = pkg;
+import chaiHttp from 'chai-http';
 import { app, server } from "../src/index.mjs";
 
-const { expect } = chai;
-chai.use(chaiHttp);
+// Use chai-http plugin
+pkg.use(chaiHttp);
 
 describe("API Tests", () => {
   after(() => {
@@ -12,11 +12,11 @@ describe("API Tests", () => {
   });
 
   it("GET / should return a JSON message", (done) => {
-    chai
+    pkg
       .request(app)
       .get("/")
       .end((err, res) => {
-        if (err) done(err);
+        expect(err).to.be.null;
         expect(res).to.have.status(200);
         expect(res.body).to.be.an("object");
         expect(res.body).to.have.property("message", "Docker is easy 🐳");
@@ -26,11 +26,11 @@ describe("API Tests", () => {
 
   it("GET /user/:id should return a user by ID", (done) => {
     const userId = 123;
-    chai
+    pkg
       .request(app)
       .get(`/user/${userId}`)
       .end((err, res) => {
-        if (err) done(err);
+        expect(err).to.be.null;
         expect(res).to.have.status(200);
         expect(res.body).to.be.an("object");
         expect(res.body).to.have.property("id", userId.toString());
@@ -40,16 +40,14 @@ describe("API Tests", () => {
       });
   });
 
-  // Add other test cases here...
-
   it("POST /user should create a new user", (done) => {
     const newUser = { name: "John Doe", email: "john@example.com" };
-    chai
+    pkg
       .request(app)
       .post("/user")
       .send(newUser)
       .end((err, res) => {
-        if (err) done(err);
+        expect(err).to.be.null;
         expect(res).to.have.status(201);
         expect(res.body).to.be.an("object");
         expect(res.body).to.have.property("id");
@@ -59,30 +57,27 @@ describe("API Tests", () => {
       });
   });
 
-  it("POST /user should return a 400 error if name or email is missing", (done) => {
-    chai
+  it("POST /user should return 400 if name or email is missing", (done) => {
+    pkg
       .request(app)
       .post("/user")
       .send({ name: "John Doe" })
       .end((err, res) => {
-        if (err) done(err);
+        expect(err).to.be.null;
         expect(res).to.have.status(400);
         expect(res.body).to.be.an("object");
-        expect(res.body).to.have.property(
-          "error",
-          "Name and email are required"
-        );
+        expect(res.body).to.have.property("error", "Name and email are required");
         done();
       });
   });
 
   it("GET /echo should return the echo message from query", (done) => {
     const message = "Hello, world!";
-    chai
+    pkg
       .request(app)
       .get(`/echo?message=${encodeURIComponent(message)}`)
       .end((err, res) => {
-        if (err) done(err);
+        expect(err).to.be.null;
         expect(res).to.have.status(200);
         expect(res.body).to.be.an("object");
         expect(res.body).to.have.property("echo", message);
@@ -90,12 +85,12 @@ describe("API Tests", () => {
       });
   });
 
-  it("GET /echo should return a default message if no query provided", (done) => {
-    chai
+  it("GET /echo should return default message if no query provided", (done) => {
+    pkg
       .request(app)
       .get("/echo")
       .end((err, res) => {
-        if (err) done(err);
+        expect(err).to.be.null;
         expect(res).to.have.status(200);
         expect(res.body).to.be.an("object");
         expect(res.body).to.have.property("echo", "No message provided");
