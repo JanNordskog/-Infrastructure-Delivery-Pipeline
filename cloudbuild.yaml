@@ -1,29 +1,36 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$COMMIT_SHA', '.']
+    args:
+      - 'build'
+      - '-t'
+      - '$_AR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/quiz-app-backend:$SHORT_SHA'
+      - '.'
     
   # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$COMMIT_SHA']
+    args:
+      - 'push'
+      - '$_AR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/quiz-app-backend:$SHORT_SHA'
     
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
-    - 'run'
-    - 'deploy'
-    - 'quiz-app-backend'
-    - '--image'
-    - 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$COMMIT_SHA'
-    - '--region'
-    - 'us-central1'
-    - '--platform'
-    - 'managed'
-    - '--allow-unauthenticated'
+      - 'run'
+      - 'deploy'
+      - 'quiz-app-backend'
+      - '--image'
+      - '$_AR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/quiz-app-backend:$SHORT_SHA'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
 
-options:
-  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _AR_HOSTNAME: us-central1-docker.pkg.dev
+  _REPOSITORY: cloud-run-source-deploy
 
 images:
-- 'us-central1-docker.pkg.dev/neat-library-437612-v7/cloud-run-source-deploy/quiz-app-backend:$COMMIT_SHA'
+  - '$_AR_HOSTNAME/$PROJECT_ID/$_REPOSITORY/quiz-app-backend:$SHORT_SHA'
