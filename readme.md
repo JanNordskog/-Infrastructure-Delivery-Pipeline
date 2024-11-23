@@ -53,6 +53,54 @@ Run the test suite:
 npm test
 ```
 
+## CI/CD Pipeline
+
+The project uses GitHub Actions for continuous integration and deployment. The pipeline is triggered on:
+- Push to main branch
+- Pull requests to main branch
+
+### Pipeline Stages
+
+1. **Test Stage**
+   - Runs on: Ubuntu latest
+   - Node.js version: 20.x
+   - Steps:
+     - Checkout code
+     - Setup Node.js
+     - Install dependencies
+     - Run tests
+     - Run security audit
+
+2. **Docker Build Stage**
+   - Runs after successful test stage
+   - Only triggers on main branch
+   - Steps:
+     - Build Docker image
+     - Test container functionality
+     - Tag image with commit SHA
+
+### Pipeline Configuration
+
+The pipeline configuration is located in `.github/workflows/ci.yml`. To configure the pipeline, you need to:
+
+1. Configure GitHub repository secrets:
+   ```
+   DOCKERHUB_USERNAME: Your Docker Hub username
+   DOCKERHUB_TOKEN: Your Docker Hub access token
+   ```
+
+2. Branch protection rules (recommended):
+   - Require pull request reviews
+   - Require status checks to pass
+   - Require up-to-date branches
+
+### Pipeline Status
+
+You can view the pipeline status:
+- In GitHub Actions tab
+- Via status badges in README
+- In pull request checks
+
 ## Deployment
 
 The application can be deployed using Docker. The CI/CD pipeline automatically builds and tests the application on every push to main.
@@ -73,6 +121,16 @@ The application can be deployed using Docker. The CI/CD pipeline automatically b
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+### Development Workflow
+
+1. Create a feature branch from main
+2. Make your changes
+3. Ensure tests pass locally (`npm test`)
+4. Push changes and create PR
+5. Wait for CI pipeline to complete
+6. Address any review comments
+7. Merge once approved
 
 ## License
 
