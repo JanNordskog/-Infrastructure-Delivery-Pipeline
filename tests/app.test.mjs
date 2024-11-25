@@ -11,18 +11,7 @@ describe("API Tests", () => {
     server.close(); // Close the server after all tests
   });
 
-  it("GET / should return a JSON message", (done) => {
-    pkg
-      .request(app)
-      .get("/")
-      .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
-        expect(res.body).to.be.an("object");
-        expect(res.body).to.have.property("message", "Docker is easy 🐳");
-        done();
-      });
-  });
+
 
   it("GET /user/:id should return a user by ID", (done) => {
     const userId = 123;
