@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "Docker is easy 🐳" });
+  res.json({ message: "Docker is not so easy I guess 🐳" });
 });
 
 app.get("/user/:id", (req, res) => {
