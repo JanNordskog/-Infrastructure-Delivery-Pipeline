@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "Docker is not so easy I guess 🐳" });
+  res.json({ message: "Looking forward to an amazing weekend! 🌞 Going to try that new café downtown for brunch ☕, then head to the park for a picnic 🧺. Nothing beats reading a good book under a shady tree 📚 while watching the butterflies dance through the flowers 🦋. Maybe I'll even try my hand at sketching the scenery 🎨. What could be better than that?" });
 });
 
 app.get("/user/:id", (req, res) => {
