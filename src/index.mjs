@@ -19,8 +19,16 @@ app.use((req, res, next) => {
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "Looking forward to an amazing weekend! 🌞 Going to try that new café downtown for brunch ☕, then head to the park for a picnic 🧺. Nothing beats reading a good book under a shady tree 📚 while watching the butterflies dance through the flowers 🦋. Maybe I'll even try my hand at sketching the scenery 🎨. What could be better than that?" });
-});
+  res.json({
+    message: "Welcome to the API! Here are the available endpoints:",
+    endpoints: {
+      "/": "GET - View this welcome message and list of available endpoints",
+      "/user/:id": "GET - Fetch details of a user by their ID",
+      "/user": "POST - Create a new user (requires 'name' and 'email' in the request body)",
+      "/echo": "GET - Echo back a message provided as a query parameter ('?message=your_message')",
+    },
+  });
+  });
 
 app.get("/user/:id", (req, res) => {
   const userId = req.params.id;
