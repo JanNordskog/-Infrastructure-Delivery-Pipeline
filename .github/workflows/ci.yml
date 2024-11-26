@@ -60,7 +60,7 @@ jobs:
         env:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-          REGION: us-central1
+          REGION: ${{ secrets.GCP_REGION }}
         run: |
           gcloud run deploy $IMAGE_NAME \
             --image us-central1-docker.pkg.dev/$PROJECT_ID/quiz-app-repo/$IMAGE_NAME:${{ github.sha }} \
