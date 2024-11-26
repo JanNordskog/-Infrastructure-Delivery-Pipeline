@@ -5,7 +5,7 @@ steps:
       'build',
       '--no-cache',
       '-t',
-      'us-central1-docker.pkg.dev/${PROJECT_ID}/quiz-app-repo/${_SERVICE_NAME}:$COMMIT_SHA',
+      '${{ secrets._DEPLOY_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/quiz-app-repo/${{ secrets._SERVICE_NAME }}:$COMMIT_SHA',
       '.',
       '-f',
       'Dockerfile'
@@ -16,7 +16,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'push',
-      'us-central1-docker.pkg.dev/${PROJECT_ID}/quiz-app-repo/${_SERVICE_NAME}:$COMMIT_SHA'
+      '${{ secrets._DEPLOY_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/quiz-app-repo/${{ secrets._SERVICE_NAME }}:$COMMIT_SHA'
     ]
     id: Push
 
@@ -27,18 +27,18 @@ steps:
       'run',
       'services',
       'update',
-      '${_SERVICE_NAME}',
+      '${{ secrets._SERVICE_NAME }}',
       '--platform=managed',
-      '--image=us-central1-docker.pkg.dev/${PROJECT_ID}/quiz-app-repo/${_SERVICE_NAME}:$COMMIT_SHA',
+      '--image=${{ secrets._DEPLOY_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/quiz-app-repo/${{ secrets._SERVICE_NAME }}:$COMMIT_SHA',
       '--labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID',
-      '--region=${_DEPLOY_REGION}',
+      '--region=${{ secrets._DEPLOY_REGION }}',
       '--quiet'
     ]
     id: Deploy
 
 substitutions:
-  _DEPLOY_REGION: us-central1
-  _SERVICE_NAME: quiz-app-backend
+  _DEPLOY_REGION: ${{ secrets._DEPLOY_REGION }}  # Using GitHub Secret for deployment region
+  _SERVICE_NAME: ${{ secrets._SERVICE_NAME }}  # Using GitHub Secret for service name
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -50,4 +50,4 @@ tags:
   - quiz-app-backend
 
 images:
-  - 'us-central1-docker.pkg.dev/${PROJECT_ID}/quiz-app-repo/${_SERVICE_NAME}:$COMMIT_SHA'
+  - '${{ secrets._DEPLOY_REGION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/quiz-app-repo/${{ secrets._SERVICE_NAME }}:$COMMIT_SHA'
