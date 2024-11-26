@@ -53,8 +53,8 @@ jobs:
           PROJECT_ID: ${{ secrets.PROJECT_ID }}
           IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
         run: |
-          docker build -t us-central1-docker.pkg.dev/$PROJECT_ID/quiz-app-repo/$IMAGE_NAME:${{ github.sha }} .
-          docker push us-central1-docker.pkg.dev/$PROJECT_ID/quiz-app-repo/$IMAGE_NAME:${{ github.sha }}
+          docker build -t ${{ secrets.GCP_REGION }}-docker.pkg.dev/$PROJECT_ID/quiz-app-repo/$IMAGE_NAME:${{ github.sha }} .
+          docker push ${{ secrets.GCP_REGION }}-docker.pkg.dev/$PROJECT_ID/quiz-app-repo/$IMAGE_NAME:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         env:
@@ -63,7 +63,7 @@ jobs:
           REGION: ${{ secrets.GCP_REGION }}
         run: |
           gcloud run deploy $IMAGE_NAME \
-            --image us-central1-docker.pkg.dev/$PROJECT_ID/quiz-app-repo/$IMAGE_NAME:${{ github.sha }} \
+            --image ${{ secrets.GCP_REGION }}-docker.pkg.dev/$PROJECT_ID/quiz-app-repo/$IMAGE_NAME:${{ github.sha }} \
             --region $REGION \
             --platform managed \
             --allow-unauthenticated
