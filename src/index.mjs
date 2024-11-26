@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 // Routes
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to the API! 🌟 Here's what you can do:",
+    message: "Welcome to the API 2.1! 🌟 Here's what you can do:",
     endpoints: [
       {
         method: "GET",
