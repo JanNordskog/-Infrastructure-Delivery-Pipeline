@@ -20,14 +20,38 @@ app.use((req, res, next) => {
 // Routes
 app.get("/", (req, res) => {
   res.json({
-    message: "Welcome to the API! Here are the available endpoints:",
-    endpoints: {
-      "/": "GET - View this welcome message and list of available endpoints",
-      "/user/:id": "GET - Fetch details of a user by their ID",
-      "/user": "POST - Create a new user (requires 'name' and 'email' in the request body)",
-      "/echo": "GET - Echo back a message provided as a query parameter ('?message=your_message')",
-    },
-  });
+    message: "Welcome to the API! 🌟 Here's what you can do:",
+    endpoints: [
+      {
+        method: "GET",
+        path: "/",
+        description: "View this welcome message and a list of available endpoints",
+      },
+      {
+        method: "GET",
+        path: "/user/:id",
+        description: "Fetch details of a user by their ID",
+        example: "/user/123",
+      },
+      {
+        method: "POST",
+        path: "/user",
+        description: "Create a new user (requires 'name' and 'email' in the request body)",
+        example: {
+          requestBody: {
+            name: "John Doe",
+            email: "johndoe@example.com",
+          },
+        },
+      },
+      {
+        method: "GET",
+        path: "/echo",
+        description: "Echo back a message provided as a query parameter",
+        example: "/echo?message=Hello",
+      },
+    ],
+  });  
   });
 
 app.get("/user/:id", (req, res) => {
